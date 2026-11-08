@@ -12,10 +12,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="v-a">
 
 <header class="header">
-  <a href="#top" class="header__logo"><img src="assets/logo-dark.png" alt="art." width="920" height="360"></a>
+  <a href="#top" class="header__logo">
+    <img class="logo-light" src="assets/logo-light.png" alt="art." width="920" height="360">
+    <img class="logo-dark" src="assets/logo-dark.png" alt="" width="920" height="360">
+  </a>
   <button class="header__toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
   <nav class="menu" id="menu" aria-label="Main">
     <a href="#about">About</a>
@@ -27,10 +30,10 @@
   </nav>
 </header>
 
-<main id="top">
+<main>
 
-  <section class="hero">
-    <img class="hero__img" src="assets/img/advisor.jpg" alt="The advisor beside a suspended sculpture at the Arsenale, Venice" width="1192" height="1205">
+  <section class="hero hero--a" id="top">
+    <img class="hero__img" src="assets/img/spheres.jpg" alt="Visitors walking through an installation of mirrored spheres" width="1600" height="2378">
     <div class="hero__text">
       <h1>Private art advisory<span class="dot">.</span></h1>
       <div class="hero__links">
@@ -41,8 +44,12 @@
   </section>
 
   <section class="about wrap" id="about">
-    <h2 class="about__name"><span class="label">About</span>[Advisor name]</h2>
+    <figure class="about__img">
+      <img src="assets/img/advisor.jpg" alt="The advisor beside a suspended sculpture at the Arsenale, Venice" width="1192" height="1205" loading="lazy">
+      <figcaption>Arsenale, Venice</figcaption>
+    </figure>
     <div class="about__text">
+      <h2 class="about__name"><span class="label">About</span>[Advisor name]</h2>
       <p class="about__lead">A private art advisor with extensive experience in acquiring and managing significant contemporary artwork internationally, and in realising large-scale art projects.</p>
       <p>[Two or three sentences of biography: background, institutions and the cities she works between.]</p>
       <a href="#contact">Get in touch</a>
