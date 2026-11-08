@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>artdot — written by Claude</title>
+<style>
+  :root { --ink:#111; --paper:#f4efe6; --accent:#e4572e; }
+  * { box-sizing:border-box; margin:0; }
+  body {
+    min-height:100vh; display:grid; place-items:center;
+    background:var(--paper); color:var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    overflow:hidden;
+  }
+  canvas { position:fixed; inset:0; z-index:0; }
+  main {
+    position:relative; z-index:1; text-align:center;
+    padding:3rem 2.5rem; background:rgba(244,239,230,.88);
+    border:2px solid var(--ink); box-shadow:8px 8px 0 var(--ink);
+    max-width:32rem;
+  }
+  h1 { font-size:clamp(3rem,10vw,5.5rem); letter-spacing:-.04em; line-height:1; }
+  h1 span { color:var(--accent); }
+  p { margin-top:1.25rem; font-size:1.1rem; line-height:1.5; }
+  .stamp {
+    display:inline-block; margin-top:1.5rem; padding:.4rem .8rem;
+    font:600 .8rem/1 ui-monospace, Menlo, monospace; text-transform:uppercase;
+    letter-spacing:.08em; border:1.5px solid var(--ink);
+  }
+  small { display:block; margin-top:1rem; font:.75rem ui-monospace, Menlo, monospace; opacity:.6; }
+</style>
+</head>
+<body>
+<canvas id="dots"></canvas>
+<main>
+  <h1>art<span>.</span>dot</h1>
+  <p>This page was written and pushed to <strong>oliverhuml12-oss/artdot</strong> by Claude — proof of write access.</p>
+  <div class="stamp">First commit · 8 Nov 2026</div>
+  <small>Move your cursor — the dots follow.</small>
+</main>
+<script>
+  const c = document.getElementById('dots'), x = c.getContext('2d');
+  let W, H, dots = [], m = { x: -999, y: -999 };
+  const colors = ['#111', '#e4572e', '#2e86ab', '#f2c14e'];
+  function size() {
+    W = c.width = innerWidth; H = c.height = innerHeight;
+    dots = [];
+    for (let gx = 20; gx < W; gx += 34)
+      for (let gy = 20; gy < H; gy += 34)
+        dots.push({ ox: gx, oy: gy, x: gx, y: gy, c: colors[(Math.random() * colors.length) | 0], r: 2 + Math.random() * 3 });
+  }
+  addEventListener('resize', size);
+  addEventListener('pointermove', e => { m.x = e.clientX; m.y = e.clientY; });
+  function tick() {
+    x.clearRect(0, 0, W, H);
+    for (const d of dots) {
+      const dx = m.x - d.ox, dy = m.y - d.oy, dist = Math.hypot(dx, dy);
+      const pull = dist < 160 ? (1 - dist / 160) * 0.35 : 0;
+      d.x += (d.ox + dx * pull - d.x) * 0.12;
+      d.y += (d.oy + dy * pull - d.y) * 0.12;
+      x.fillStyle = d.c;
+      x.beginPath(); x.arc(d.x, d.y, d.r * (1 + pull * 2), 0, 7); x.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  size(); tick();
+</script>
+</body>
+</html>
