@@ -21,3 +21,16 @@ if (document.body.classList.contains('v-a') && hero && 'IntersectionObserver' in
     { rootMargin: `-${header.offsetHeight}px 0px 0px 0px` }
   ).observe(hero);
 }
+
+// Scroll progress line in the glass header (version A).
+if (document.body.classList.contains('v-a')) {
+  let ticking = false;
+  const update = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    header.style.setProperty('--progress', max > 0 ? Math.min(1, window.scrollY / max).toFixed(4) : 0);
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+}

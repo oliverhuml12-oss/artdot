@@ -107,13 +107,39 @@ a { color: inherit; }
   background: rgba(255, 255, 255, .10);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   backdrop-filter: blur(18px) saturate(140%);
-  border-bottom: 1px solid rgba(255, 255, 255, .28);
-  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+  transition: background-color .3s ease, color .3s ease;
 }
-.v-a .header.is-solid {
-  background: rgba(255, 255, 255, .78);
-  border-bottom-color: rgba(17, 17, 17, .10);
+.v-a .header.is-solid { background: rgba(255, 255, 255, .78); }
+
+/* scroll progress: a faint line that brightens toward a soft point of light */
+.header__progress { display: none; }
+.v-a .header__progress {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: calc(var(--progress, 0) * 100%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .22) 60%, rgba(255, 255, 255, .7) 100%);
+  pointer-events: none;
 }
+.v-a .header__progress::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: -3px;
+  width: 20px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, .85), rgba(255, 255, 255, 0));
+}
+.v-a .header.is-solid .header__progress {
+  background: linear-gradient(to right, rgba(17, 17, 17, 0) 0%, rgba(17, 17, 17, .14) 60%, rgba(17, 17, 17, .38) 100%);
+}
+.v-a .header.is-solid .header__progress::after {
+  background: radial-gradient(closest-side, rgba(153, 0, 0, .55), rgba(153, 0, 0, 0));
+}
+.is-open .header__progress { opacity: 0; }
 .is-open .v-a .header, .v-a.is-open .header { background: var(--paper); }
 
 /* ---------- Hero (shared) ---------- */
@@ -146,7 +172,10 @@ a { color: inherit; }
 /* A */
 .hero--a .hero__img { object-position: 50% 50%; }
 .hero--a .hero__text { left: var(--gutter); right: var(--gutter); bottom: 30px; }
-.hero--a h1 { font-size: 50px; line-height: .94; }
+.hero--a h1 {
+  font: 700 46px/.98 "League Spartan", var(--sans);
+  letter-spacing: -.035em;
+}
 .hero__links { display: flex; gap: 28px; margin-top: 16px; }
 .hero__links a, .hero__bar a {
   display: inline-flex;
@@ -166,8 +195,8 @@ a { color: inherit; }
   left: var(--gutter);
   right: var(--gutter);
   top: 26%;
-  font-size: 64px;
-  line-height: .9;
+  font: 400 60px/.95 "DM Serif Display", var(--serif);
+  letter-spacing: -.015em;
 }
 .hero__bar {
   left: var(--gutter);
@@ -256,20 +285,28 @@ a { color: inherit; }
   padding-bottom: 120px;
 }
 .contact h2 { margin-bottom: 22px; font: 34px/1 var(--serif); }
-.contact a {
+.contact__body { display: flex; flex-direction: column; gap: 32px; width: 100%; }
+.contact a { text-decoration: none; }
+.contact a:hover { color: var(--red); }
+.contact a.contact__mail {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-size: 17px;
-  text-decoration: none;
-}
-.contact a.contact__mail {
   font: 30px/1.1 var(--serif);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 6px;
+  align-self: flex-start;
 }
-.contact a:hover { color: var(--red); }
+.contact__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px 20px;
+  margin: 0;
+}
+.contact__list dt { margin-bottom: 6px; font-size: 14px; color: var(--stone); }
+.contact__list dd { margin: 0; font-size: 16px; line-height: 1.5; }
+.contact__list dd a { display: inline-flex; min-height: 24px; }
 
 /* ---------- Footer ---------- */
 
@@ -311,11 +348,11 @@ a { color: inherit; }
 
   .hero--a .hero__img { object-position: 50% 42%; }
   .hero--a .hero__text { bottom: 64px; max-width: 960px; }
-  .hero--a h1 { font-size: 112px; line-height: .92; }
+  .hero--a h1 { font-size: 104px; line-height: .95; }
   .hero__links { gap: 40px; margin-top: 22px; }
 
   .hero--b .hero__img { object-position: 50% 60%; }
-  .hero--b .hero__title { top: auto; bottom: 104px; font-size: clamp(96px, 11vw, 168px); line-height: .88; }
+  .hero--b .hero__title { top: auto; bottom: 104px; font-size: clamp(88px, 10vw, 152px); line-height: .92; }
   .hero__bar { bottom: 40px; font-size: 14px; }
 
   .about {
@@ -359,13 +396,14 @@ a { color: inherit; }
   .contact {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    row-gap: 4px;
     padding-top: 220px;
     padding-bottom: 180px;
   }
-  .contact h2 { grid-row: span 2; margin: 0; font-size: 56px; }
+  .contact h2 { margin: 0; font-size: 56px; }
+  .contact__body { gap: 56px; }
   .contact a.contact__mail { font-size: 64px; }
-  .contact a:last-child { grid-column: 2; font-size: 20px; }
+  .contact__list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
+  .contact__list dd { font-size: 17px; }
 
   .footer img { width: 64px; }
 }
