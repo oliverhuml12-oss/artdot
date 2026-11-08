@@ -283,53 +283,24 @@ a { color: inherit; }
   scroll-snap-align: start;
 }
 
-/* ---------- Contact ---------- */
+/* ---------- Footer (holds contact details) ---------- */
 
-.contact {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  padding-top: 136px;
-  padding-bottom: 120px;
-}
-.contact h2 { margin-bottom: 22px; font: 34px/1 var(--serif); }
-.contact__body { display: flex; flex-direction: column; gap: 32px; width: 100%; }
-.contact a { text-decoration: none; }
-.contact a:hover { color: var(--red); }
-.contact a.contact__mail {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  font: 30px/1.1 var(--serif);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 6px;
-  align-self: flex-start;
-}
-.contact__list {
+.footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 28px 20px;
-  margin: 0;
-}
-.contact__list dt { margin-bottom: 6px; font-size: 14px; color: var(--stone); }
-.contact__list dd { margin: 0; font-size: 16px; line-height: 1.5; }
-.contact__list dd a { display: inline-flex; min-height: 24px; }
-
-/* ---------- Footer ---------- */
-
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 24px;
-  padding-bottom: 32px;
+  margin-top: 136px;
+  padding-top: 32px;
+  padding-bottom: 36px;
   border-top: 1px solid var(--plaster);
-  font-size: 12px;
-  color: var(--stone);
+  font-size: 14px;
+  line-height: 1.6;
 }
-.footer img { width: 56px; }
+.footer__logo { grid-column: 1 / -1; width: 56px; }
+.footer__col { display: flex; flex-direction: column; align-items: flex-start; }
+.footer a { text-decoration: none; }
+.footer a:hover { color: var(--red); }
+.footer__copy { grid-column: 1 / -1; color: var(--stone); font-size: 12px; }
 
 /* ---------- Desktop ---------- */
 
@@ -404,17 +375,13 @@ a { color: inherit; }
 
   .wide { aspect-ratio: 21 / 9; }
 
-  .contact {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    padding-top: 220px;
-    padding-bottom: 180px;
+  .footer {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    align-items: start;
+    margin-top: 200px;
+    padding-top: 40px;
+    padding-bottom: 48px;
   }
-  .contact h2 { margin: 0; font-size: 56px; }
-  .contact__body { gap: 56px; }
-  .contact a.contact__mail { font-size: 64px; }
-  .contact__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
-  .contact__list dd { font-size: 17px; }
-
-  .footer img { width: 64px; }
+  .footer__logo { grid-column: auto; width: 64px; }
+  .footer__copy { grid-column: auto; justify-self: end; }
 }
